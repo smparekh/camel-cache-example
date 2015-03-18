@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:camel-cxf="http://camel.apache.org/schema/blueprint/cxf"
+	xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
+	xmlns:camel="http://camel.apache.org/schema/blueprint" 
+	xmlns:cxf="http://cxf.apache.org/blueprint/core"
+	xmlns:http="http://cxf.apache.org/transports/http/configuration"
+	xmlns:httpj="http://cxf.apache.org/transports/http-jetty/configuration"
+	xsi:schemaLocation="
+	http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd 
+	http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd 
+	http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd 
+	http://cxf.apache.org/blueprint/core http://cxf.apache.org/schemas/blueprint/core.xsd 
+	http://camel.apache.org/schema/blueprint/cxf http://camel.apache.org/schema/blueprint/cxf/camel-cxf.xsd
+	http://cxf.apache.org/transports/http-jetty/configuration http://cxf.apache.org/schemas/configuration/http-jetty.xsd">
+
+	<httpj:engine-factory bus="cxf">
+	<!-- SSL Config Needed -->
+	<!-- Set up port -->
+		<httpj:engine port="9001">
+			<httpj:threadingParameters minThreads="5" maxThreads="15" />
+			<httpj:connector>
+	        	<bean id="connector" class="org.eclipse.jetty.server.bio.SocketConnector">
+	           		<property name="port" value="9001" />
+	        	</bean>
+	      	</httpj:connector>
+	      	<httpj:handlers>
+	        	<bean id="handler" class="org.eclipse.jetty.server.handler.DefaultHandler"/>         
+	      	</httpj:handlers>
+		</httpj:engine>
+	</httpj:engine-factory>
+
+	<cxf:bus>
+		<cxf:features>
+			<cxf:logging />
+		</cxf:features>
+	</cxf:bus>
+	<camel-cxf:rsServer id="rsServer" address="http://localhost:9001/rest"
+		serviceClass="com.redhat.examples.camel.cache.RefreshService" />
+
+	<bean id="refreshCacheBean" class="com.redhat.examples.camel.cache.Refresh" />
+	<bean id="CacheRouteBuilder" class="com.redhat.examples.camel.cache.CacheRouteBuilder" />
+	<camelContext trace="false" id="blueprintContext" xmlns="http://camel.apache.org/schema/blueprint">
+  <routeBuilder ref="CacheRouteBuilder"/>
+</camelContext>
+
+</blueprint>
