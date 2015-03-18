@@ -37,9 +37,9 @@
 		</cxf:features>
 	</cxf:bus>
 	<camel-cxf:rsServer id="rsServer" address="http://localhost:9001/rest"
-		serviceClass="com.redhat.examples.camel.cache.RefreshService" />
+		serviceClass="com.redhat.examples.camel.cache.RestService" />
 
-	<bean id="refreshCacheBean" class="com.redhat.examples.camel.cache.Refresh" />
+	<bean id="restImplBean" class="com.redhat.examples.camel.cache.RestServiceImpl" />
 	<bean id="CacheRouteBuilder" class="com.redhat.examples.camel.cache.CacheRouteBuilder" />
 	<camelContext trace="false" id="blueprintContext" xmlns="http://camel.apache.org/schema/blueprint">
   <routeBuilder ref="CacheRouteBuilder"/>

@@ -10,8 +10,8 @@ import org.apache.cxf.jaxrs.utils.JAXRSUtils;
 
 
 
-public class Refresh {
-	public Refresh() {
+public class RestServiceImpl {
+	public RestServiceImpl() {
 
 	}
 

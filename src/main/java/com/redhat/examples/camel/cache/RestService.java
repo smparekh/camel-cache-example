@@ -3,8 +3,8 @@ package com.redhat.examples.camel.cache;
 import javax.ws.rs.*;
 
 // This could be an interface if CAMEL-6014 is fixed.
-@Path("/refreshservice/")
-public class RefreshService {
+@Path("/restservice/")
+public class RestService {
 
 	@PUT
 	@Path("/addEntry/{key}/{value}")
