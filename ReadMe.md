@@ -17,9 +17,11 @@ osgi:install -s mvn:com.redhat.examples/camel-cache-example/1.0.0-SNAPSHOT
 Use
 ---
 *Create new REST SOAP UI Project*
+
 wadl location: http://localhost:9001/rest?_wadl
 
 *Add a cache entry:*
+
 Use the addEntry function exposed by the rest service.
 1. Add the key string to the key param
 2. Add the value string to the value param
@@ -27,6 +29,7 @@ Use the addEntry function exposed by the rest service.
 4. The value is now added with the key specified
 
 *Retrieve the cache entry:*
+
 Use the getEntry function exposed b the rest service.
 1.  Add the key string to the key param
 2.  If value exists for key it is returned in the response...
