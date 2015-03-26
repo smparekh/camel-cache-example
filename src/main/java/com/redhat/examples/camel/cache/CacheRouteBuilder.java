@@ -10,13 +10,10 @@ public class CacheRouteBuilder extends RouteBuilder {
 		// TODO Auto-generated method stub
 		
 		// Set up Cache
-		from("cache://MyApplicationCache?timeToLiveSeconds=3600")
-			.log("Cache Initialized")
+		from("cache://MyApplicationCache?eternal=true")
 			.to("mock:endpoint");
 		
 		// CXFRS Entry Point
-		/*from("jetty:http://localhost:9001?matchOnUriPrefix=true")
-			.to("cxfrs:bean:rsServer");*/
 		from("cxfrs:bean:rsServer?bindingStyle=SimpleConsumer")
 			.log("GET Request Received...")
 			.choice()
@@ -37,6 +34,18 @@ public class CacheRouteBuilder extends RouteBuilder {
 				        .otherwise()
 				        .to("bean:restImplBean?method=gotEntry")
 				    .end()
-				.end();
+			.end();
+		
+		/* Workaround for accessing cache directly from other bundles shut down the cache 
+		  when they are shutdown
+		  see: https://issues.apache.org/jira/browse/CAMEL-7174 
+		*/
+		from("direct-vm:CacheKeyCheck")
+			.log("Client CHECK Request Recevied...")
+			.to("cache://MyApplicationCache");
+		
+		from("direct-vm:CacheChangeValue")
+			.log("Client CHANGE Request Received...")
+			.to("cache://MyApplicationCache");
 	}
 }

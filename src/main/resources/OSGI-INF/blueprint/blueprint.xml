@@ -41,7 +41,7 @@
 
 	<bean id="restImplBean" class="com.redhat.examples.camel.cache.RestServiceImpl" />
 	<bean id="CacheRouteBuilder" class="com.redhat.examples.camel.cache.CacheRouteBuilder" />
-	<camelContext trace="false" id="blueprintContext" xmlns="http://camel.apache.org/schema/blueprint">
+	<camelContext trace="false" id="exampleCacheContext" xmlns="http://camel.apache.org/schema/blueprint">
   <routeBuilder ref="CacheRouteBuilder"/>
 </camelContext>
 
