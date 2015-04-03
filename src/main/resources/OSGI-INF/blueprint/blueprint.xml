@@ -41,6 +41,7 @@
 
 	<bean id="restImplBean" class="com.redhat.examples.camel.cache.RestServiceImpl" />
 	<bean id="CacheRouteBuilder" class="com.redhat.examples.camel.cache.CacheRouteBuilder" />
+	<bean id="aggregationStrategy" class="com.redhat.examples.camel.cache.CacheAggregationStrategy" />
 	<camelContext trace="false" id="exampleCacheContext" xmlns="http://camel.apache.org/schema/blueprint">
   <routeBuilder ref="CacheRouteBuilder"/>
 </camelContext>

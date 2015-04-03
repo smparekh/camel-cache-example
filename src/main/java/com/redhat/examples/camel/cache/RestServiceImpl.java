@@ -47,4 +47,16 @@ public class RestServiceImpl {
 		String rString = "Value for key: " + exchange.getIn().getHeader("key").toString() + " not found.";
 		exchange.getOut().setBody( rString );
 	}
+	
+	public void setCachedUserKey(Exchange exchange) {
+		String inUser = exchange.getIn().getHeader("InUserKey").toString();
+		exchange.getIn().setHeader(CacheConstants.CACHE_OPERATION, CacheConstants.CACHE_OPERATION_GET);
+		exchange.getIn().setHeader(CacheConstants.CACHE_KEY, inUser);
+	}
+	
+	public void setCachedPassKey(Exchange exchange) {
+		String inPass = exchange.getIn().getHeader("InPassKey").toString();
+		exchange.getIn().setHeader(CacheConstants.CACHE_OPERATION, CacheConstants.CACHE_OPERATION_GET);
+		exchange.getIn().setHeader(CacheConstants.CACHE_KEY, inPass);
+	}
 }
